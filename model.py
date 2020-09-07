@@ -13,13 +13,24 @@ def load_images():
     measurements = []
     for line in lines:
         filename = line[0].split('/')[-1]
-        path = '/opt/data/IMG/' + filename
-        image = ndimage.imread(path)
+        path = '/opt/data/IMG/'
+        image = ndimage.imread(path+filename)
+        steer = float(line[3])
         images.append(image)
-        measurements.append(float(line[3]))
+        measurements.append(steer)
         # Flip the image and add again
         images.append(np.fliplr(image))
-        measurements.append(-1 * float(line[3]))
+        measurements.append(-steer)
+        # Add other 2 camera images
+        filename = line[1].split('/')[-1]
+        limg = ndimage.imread(path+filename)
+        filename = line[2].split('/')[-1]
+        rimg = ndimage.imread(path+filename)
+        images.append(limg)
+        images.append(rimg)
+        correction = 0.1
+        measurements.append(steer+correction)
+        measurements.append(steer-correction)
       
     X_train = np.array(images)
     y_train = np.array(measurements)
