@@ -45,7 +45,7 @@ def train(x, y):
     #model.add(Dense(1))
     
     model.compile(loss='mse', optimizer='adam')
-    model.fit(x, y, validation_split=0.2, epochs=2, shuffle=True)
+    model.fit(x, y, validation_split=0.2, epochs=5, shuffle=True)
 
     model.save('model.h5')
     
