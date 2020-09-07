@@ -14,11 +14,12 @@ def load_images():
     for line in lines:
         filename = line[0].split('/')[-1]
         path = '/opt/data/IMG/' + filename
-       # bgr_image = cv2.imread(path)
-       # image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
         image = ndimage.imread(path)
         images.append(image)
         measurements.append(float(line[3]))
+        # Flip the image and add again
+        images.append(np.fliplr(image))
+        measurements.append(-1 * float(line[3]))
       
     X_train = np.array(images)
     y_train = np.array(measurements)
