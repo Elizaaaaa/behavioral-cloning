@@ -9,7 +9,7 @@ def generator(samples, batch_size=32):
     n = len(samples)
     
     path = './data/IMG/'
-    correction = 0.2
+    correction = 0.15
     while 1:
         shuffle(samples)    
         for i in range(0, n, batch_size):
@@ -22,8 +22,6 @@ def generator(samples, batch_size=32):
                 image = ndimage.imread(path+filename)
                 images.append(image)
                 angles.append(angle)
-                images.append(np.fliplr(image))
-                angles.append(-1. * angle)
                 
                 filename = sample[1].split('/')[-1]
                 image = ndimage.imread(path+filename)
@@ -62,15 +60,15 @@ def train():
     validation_generator = generator(validation_sample, batch_size=batch_size)
     
     from keras.models import load_model
-    model = load_model('model.h5')
+    model = load_model('model2.h5')
     
     model.fit_generator(train_generator,
                         steps_per_epoch=ceil(len(train_sample)/batch_size),
                         validation_data=validation_generator,
                         validation_steps=ceil(len(validation_sample)/batch_size),
-                        epochs=5, verbose=1)
+                        epochs=2, verbose=1)
 
-    model.save('model1.h5')
+    model.save('model3.h5')
     
     
 if __name__ == "__main__":
