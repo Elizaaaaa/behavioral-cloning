@@ -61,14 +61,17 @@ def train():
     train_generator = generator(train_sample, batch_size=batch_size)
     validation_generator = generator(validation_sample, batch_size=batch_size)
     
-    model = Swquential()
-    model.load('model.h5')
+    from keras.models import load_model
+    model = load_model('model.h5')
     
     model.fit_generator(train_generator,
                         steps_per_epoch=ceil(len(train_sample)/batch_size),
                         validation_data=validation_generator,
                         validation_steps=ceil(len(validation_sample)/batch_size),
-                        epochs=5, verbose=1)    
+                        epochs=5, verbose=1)
+
+    model.save('model1.h5')
+    
     
 if __name__ == "__main__":
     #X_train, y_train = load_images()
