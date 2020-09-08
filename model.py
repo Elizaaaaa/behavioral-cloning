@@ -53,14 +53,25 @@ def generator(samples, batch_size=32):
             for sample in batch_samples:
                 angle = float(sample[3])
                 filename = sample[0].split('/')[-1]
-                images.append(ndimage.imread(path+filename))
+                image = ndimage.imread(path+filename)
+                images.append(image)
                 angles.append(angle)
+                images.append(np.fliplr(image))
+                angles.append(-1 * angle)
+                
                 filename = sample[1].split('/')[-1]
-                images.append(ndimage.imread(path+filename))
+                image = ndimage.imread(path+filename)
+                images.append(image)
                 angles.append(angle+correction)
+                images.append(np.fliplr(image))
+                angles.append(-1 * (angle+correction))
+                
                 filename = sample[2].split('/')[-1]
-                images.append(ndimage.imread(path+filename))
+                image = ndimage.imread(path+filename)
+                images.append(image)
                 angles.append(angle-correction)
+                images.append(np.fliplr(image))
+                angles.append(-1 * (angle-correction))
                 
             X_train = np.array(images)
             y_train = np.array(angles)
